@@ -8,7 +8,7 @@ public class Dish {
 
     private int cost;
 
-    private Restaurant restaurant;
+    private DailyMenu dailyMenu;
 
     public int getId() {
         return id;
@@ -34,11 +34,11 @@ public class Dish {
         this.cost = cost;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public DailyMenu getDailyMenu() {
+        return dailyMenu;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setDailyMenu(DailyMenu dailyMenu) {
+        this.dailyMenu = dailyMenu;
     }
 }

@@ -1,5 +1,8 @@
 package ru.snx.lunchvotes.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Restaurant {
 
     private int id;
