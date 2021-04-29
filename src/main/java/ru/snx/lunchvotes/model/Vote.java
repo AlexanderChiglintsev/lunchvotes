@@ -7,12 +7,15 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "votes")
+@Table(name = "votes",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"date", "user_id"},
+                name = "date_user_unique_idx")
+)
 public class Vote {
     public static final int START_SEQ = 300;
 
     @Id
-    @SequenceGenerator(name="votes_seq", sequenceName = "votes_seq", allocationSize = 1, initialValue = START_SEQ)
+    @SequenceGenerator(name = "votes_seq", sequenceName = "votes_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "votes_seq")
     private int id;
 
