@@ -3,11 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
+    <!--Configuring datasource (HSQLDB)-->
     <bean id="dataSource"
           class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="${database.driver}"/>
@@ -16,11 +17,13 @@
         <property name="password" value="${database.password}"/>
     </bean>
 
+    <!--Init and populate DB on startup-->
     <jdbc:initialize-database enabled="${database.init}">
         <jdbc:script location="${jdbc.initLocation}"/>
         <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
+    <!--Configuring entityManagerFactory for JPA over Hibernate-->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
           p:packagesToScan="ru.snx.**.model">
@@ -37,8 +40,8 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> &lt;!&ndash;default&ndash;&gt;-->
 
-                <entry key="javax.persistence.validation.group.pre-persist" value="ru.snx.lunchvotes.View$Persist"/>
-                <entry key="javax.persistence.validation.group.pre-update" value="ru.snx.lunchvotes.View$Persist"/>
+                <entry key="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default"/>
+                <entry key="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default"/>
             </map>
         </property>
 
@@ -47,5 +50,11 @@
         </property>
     </bean>
 
+    <!--Scanning for repositories-->
     <jpa:repositories base-package="ru.snx.**.repository"/>
+
+    <!--Transactions-->
+    <tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
 </beans>

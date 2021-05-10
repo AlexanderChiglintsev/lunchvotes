@@ -9,7 +9,7 @@ public interface DailyMenuRepository {
 
     DailyMenu save(DailyMenu dailyMenu);
 
-    List<DailyMenu> getAllDailyMenu(LocalDate localDate);
+    List<DailyMenu> getAll(LocalDate localDate);
 
-
+    List<DailyMenu> getAllWithVotes(LocalDate localDate);
 }

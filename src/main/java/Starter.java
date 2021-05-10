@@ -1,7 +1,5 @@
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.stereotype.Component;
 import ru.snx.lunchvotes.repository.UserRepository;
 import ru.snx.lunchvotes.repository.datajpa.DataJpaUserRepository;
 

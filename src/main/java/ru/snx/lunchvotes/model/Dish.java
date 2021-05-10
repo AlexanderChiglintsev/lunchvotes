@@ -1,6 +1,8 @@
 package ru.snx.lunchvotes.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "dishes",
@@ -15,23 +17,35 @@ public class Dish {
     @SequenceGenerator(name = "dishes_seq", sequenceName = "dishes_seq",
             allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dishes_seq")
-    private int id;
+    private Integer id;
 
     @Column(name = "description", nullable = false)
+    @NotBlank
     private String description;
 
     @Column(name = "cost", nullable = false)
-    private int cost;
+    @NotNull
+    private Integer cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "daily_menu_id", nullable = false)
     private DailyMenu dailyMenu;
 
-    public int getId() {
+    public Dish() {
+    }
+
+    public Dish(Integer id, String description, int cost) {
+        this.id = id;
+        this.description = description;
+        this.cost = cost;
+        this.dailyMenu = new DailyMenu();
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

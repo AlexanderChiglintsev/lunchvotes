@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -17,14 +18,15 @@ public class Vote {
     @Id
     @SequenceGenerator(name = "votes_seq", sequenceName = "votes_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "votes_seq")
-    private int id;
+    private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "daily_menu_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    private Restaurant restaurant;
+    private DailyMenu dailyMenu;
 
     @Column(name = "date", nullable = false)
+    @NotNull
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,20 +34,26 @@ public class Vote {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User user;
 
-    public int getId() {
+    public Vote() {
+    }
+
+    public Vote(Vote vote) {
+        this(vote.id, vote.dailyMenu, vote.date, vote.user);
+    }
+
+    public Vote(Integer id, DailyMenu dailyMenu, LocalDate date, User user) {
+        this.id = id;
+        this.dailyMenu = dailyMenu;
+        this.date = date;
+        this.user = user;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
     }
 
     public LocalDate getDate() {
