@@ -33,4 +33,8 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
         assertThrows(DataIntegrityViolationException.class, () -> voteRepository.save(copy));
     }
 
+    @Test
+    void saveNotValid() {
+        checkValidation(() -> voteRepository.save(new Vote(null, dm1, null, user)));
+    }
 }

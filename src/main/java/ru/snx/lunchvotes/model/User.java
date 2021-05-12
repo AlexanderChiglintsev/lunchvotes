@@ -54,11 +54,11 @@ public class User {
         this(user.id, user.name, user.email, user.password, user.roles, user.votes);
     }
 
-    public User(int id, String name, String email, String password, Role role, Role... roles) {
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
         this(id, name, email, password, EnumSet.of(role, roles), Collections.emptyList());
     }
 
-    public User(int id, String name, String email, String password, Set<Role> roles, List<Vote> votes) {
+    public User(Integer id, String name, String email, String password, Set<Role> roles, List<Vote> votes) {
         this.id = id;
         this.name = name;
         this.email = email;

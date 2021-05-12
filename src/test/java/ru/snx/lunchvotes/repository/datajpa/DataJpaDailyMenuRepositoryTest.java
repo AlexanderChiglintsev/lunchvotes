@@ -8,10 +8,10 @@ import ru.snx.lunchvotes.repository.AbstractTest;
 import ru.snx.lunchvotes.repository.DailyMenuRepository;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
-import static ru.snx.lunchvotes.utils.TestData.dailyMenus;
-import static ru.snx.lunchvotes.utils.TestData.newDailyMenu;
+import static ru.snx.lunchvotes.utils.TestData.*;
 
 class DataJpaDailyMenuRepositoryTest extends AbstractTest {
 
@@ -43,5 +43,10 @@ class DataJpaDailyMenuRepositoryTest extends AbstractTest {
                 .usingRecursiveComparison()
                 .ignoringFields("dailyDishes.dailyMenu", "votes.dailyMenu", "votes.user")
                 .isEqualTo(obtained);
+    }
+
+    @Test
+    void saveNotValid() {
+        checkValidation(() -> dailyMenuRepository.save(new DailyMenu(null, restaurantOne, null, Collections.emptyList())));
     }
 }
