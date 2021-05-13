@@ -56,4 +56,13 @@ class DataJpaUserRepositoryTest extends AbstractTest {
         checkValidation(() -> userRepository.save(new User(null, "user", "test@test.ru", "1", Role.USER)));
         checkValidation(() -> userRepository.save(new User(null, "user", "test@test.ru", "1234555555555555555", Role.USER)));
     }
+
+    @Test
+    void getById(){
+        User obtained = userRepository.get(user.getId());
+        Assertions.assertThat(user)
+                .usingRecursiveComparison()
+                .ignoringFields("votes")
+                .isEqualTo(obtained);
+    }
 }

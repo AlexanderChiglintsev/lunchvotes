@@ -37,4 +37,22 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
     void saveNotValid() {
         checkValidation(() -> voteRepository.save(new Vote(null, dm1, null, user)));
     }
+
+    @Test
+    void getByDate(){
+        Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getId());
+        Assertions.assertThat(vote1)
+                .usingRecursiveComparison()
+                .ignoringFields("user", "dailyMenu")
+                .isEqualTo(obtained);
+    }
+
+    @Test
+    void getByDateNotExist(){
+        Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getId());
+        Assertions.assertThat(vote1)
+                .usingRecursiveComparison()
+                .ignoringFields("user", "dailyMenu")
+                .isEqualTo(obtained);
+    }
 }

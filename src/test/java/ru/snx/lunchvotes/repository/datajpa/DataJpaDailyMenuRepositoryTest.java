@@ -37,6 +37,15 @@ class DataJpaDailyMenuRepositoryTest extends AbstractTest {
     }
 
     @Test
+    void get() {
+        DailyMenu obtained = dailyMenuRepository.get(dm1.getId());
+        Assertions.assertThat(dm1)
+                .usingRecursiveComparison()
+                .ignoringFields("votes", "dailyDishes.dailyMenu")
+                .isEqualTo(obtained);
+    }
+
+    @Test
     void getAllWithVotes() {
         List<DailyMenu> obtained = dailyMenuRepository.getAllWithVotes(LocalDate.of(2021, 5, 1));
         Assertions.assertThat(dailyMenus)

@@ -24,6 +24,11 @@ public class DataJpaUserRepository implements UserRepository {
     }
 
     @Override
+    public User get(Integer id) {
+        return adapterUserRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public User getByEmail(String email) {
         User result = adapterUserRepository.getByEmail(email);
         if (result == null) throw new NotFoundException("User with such email not found!");
