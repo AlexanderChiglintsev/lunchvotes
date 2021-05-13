@@ -4,56 +4,67 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:p="http://www.springframework.org/schema/p"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-    <!--Configuring datasource (HSQLDB)-->
-    <bean id="dataSource"
-          class="org.apache.tomcat.jdbc.pool.DataSource">
-        <property name="driverClassName" value="${database.driver}"/>
-        <property name="url" value="${database.url}"/>
-        <property name="username" value="${database.username}"/>
-        <property name="password" value="${database.password}"/>
-    </bean>
+    <beans profile="tests">
+        <!--Configuring datasource (HSQLDB)-->
+        <bean id="dataSource"
+              class="org.apache.tomcat.jdbc.pool.DataSource">
+            <property name="driverClassName" value="${database.driver}"/>
+            <property name="url" value="${database.url}"/>
+            <property name="username" value="${database.username}"/>
+            <property name="password" value="${database.password}"/>
+        </bean>
 
-    <!--Init and populate DB on startup-->
-    <jdbc:initialize-database enabled="${database.init}">
-        <jdbc:script location="${jdbc.initLocation}"/>
-        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
-    </jdbc:initialize-database>
+        <!--Init and populate DB on startup-->
+        <jdbc:initialize-database enabled="${database.init}">
+            <jdbc:script location="${jdbc.initLocation}"/>
+            <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+        </jdbc:initialize-database>
+    </beans>
 
-    <!--Configuring entityManagerFactory for JPA over Hibernate-->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:dataSource-ref="dataSource"
-          p:packagesToScan="ru.snx.**.model">
+    <beans profile="tomcat">
+        <!--Datasource over JNDI for Tomcat-->
+        <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/lunchvotes"/>
+        <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
+    </beans>
 
-        <property name="jpaPropertyMap">
-            <map>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
-                       value="${hibernate.use_sql_comments}"/>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).JPA_PROXY_COMPLIANCE}" value="false"/>
+    <beans profile="tomcat, tests">
+        <!--Configuring entityManagerFactory for JPA over Hibernate-->
+        <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+              p:dataSource-ref="dataSource"
+              p:packagesToScan="ru.snx.**.model">
 
-                <!--https://github.com/hibernate/hibernate-orm/blob/master/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc#caching-provider-jcache-->
-                <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}" value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
-                <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> &lt;!&ndash;default&ndash;&gt;-->
+            <property name="jpaPropertyMap">
+                <map>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
+                           value="${hibernate.use_sql_comments}"/>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).JPA_PROXY_COMPLIANCE}" value="false"/>
 
-            </map>
-        </property>
+                    <!--https://github.com/hibernate/hibernate-orm/blob/master/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc#caching-provider-jcache-->
+                    <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}" value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>
+                    <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>
+                    <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/> &lt;!&ndash;default&ndash;&gt;-->
 
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" p:showSql="${jpa.showSql}"/>
-        </property>
-    </bean>
+                </map>
+            </property>
 
-    <!--Scanning for repositories-->
-    <jpa:repositories base-package="ru.snx.**.repository"/>
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" p:showSql="${jpa.showSql}"/>
+            </property>
+        </bean>
 
-    <!--Transactions-->
-    <tx:annotation-driven/>
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-          p:entityManagerFactory-ref="entityManagerFactory"/>
+        <!--Scanning for repositories-->
+        <jpa:repositories base-package="ru.snx.**.repository"/>
+
+        <!--Transactions-->
+        <tx:annotation-driven/>
+        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+              p:entityManagerFactory-ref="entityManagerFactory"/>
+    </beans>
 </beans>

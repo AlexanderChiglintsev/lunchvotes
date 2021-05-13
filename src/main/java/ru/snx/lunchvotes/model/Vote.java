@@ -1,5 +1,6 @@
 package ru.snx.lunchvotes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -32,6 +33,7 @@ public class Vote {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
     private User user;
 
     public Vote() {
@@ -54,6 +56,14 @@ public class Vote {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public DailyMenu getDailyMenu() {
+        return dailyMenu;
+    }
+
+    public void setDailyMenu(DailyMenu dailyMenu) {
+        this.dailyMenu = dailyMenu;
     }
 
     public LocalDate getDate() {

@@ -26,6 +26,11 @@ public class DataJpaDailyMenuRepository implements DailyMenuRepository {
     }
 
     @Override
+    public DailyMenu get(Integer id) {
+        return adapterDailyMenuRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public List<DailyMenu> getAll(LocalDate localDate) {
         return adapterDailyMenuRepository.findAllByDate(localDate);
     }

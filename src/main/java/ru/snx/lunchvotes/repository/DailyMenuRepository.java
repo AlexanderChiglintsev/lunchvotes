@@ -9,6 +9,8 @@ public interface DailyMenuRepository {
 
     DailyMenu save(DailyMenu dailyMenu);
 
+    DailyMenu get(Integer id);
+
     List<DailyMenu> getAll(LocalDate localDate);
 
     List<DailyMenu> getAllWithVotes(LocalDate localDate);

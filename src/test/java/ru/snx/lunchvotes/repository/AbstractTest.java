@@ -1,6 +1,7 @@
 package ru.snx.lunchvotes.repository;
 
 import org.springframework.core.NestedExceptionUtils;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
+@ActiveProfiles("tests")
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public abstract class AbstractTest {
 
