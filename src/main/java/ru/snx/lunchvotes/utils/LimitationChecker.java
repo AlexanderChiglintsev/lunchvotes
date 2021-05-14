@@ -1,6 +1,9 @@
 package ru.snx.lunchvotes.utils;
 
 import ru.snx.lunchvotes.model.DailyMenu;
+import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
+import ru.snx.lunchvotes.utils.exceptions.NotTodayException;
+import ru.snx.lunchvotes.utils.exceptions.OutOfTimeException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

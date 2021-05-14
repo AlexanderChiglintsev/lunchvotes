@@ -24,6 +24,7 @@ public class Vote {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "daily_menu_id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
     private DailyMenu dailyMenu;
 
     @Column(name = "date", nullable = false)

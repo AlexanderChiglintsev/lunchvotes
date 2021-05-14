@@ -1,0 +1,14 @@
+GET http://localhost:8080/lunchvotes/dailyMenus
+Accept: application/json
+
+###
+POST http://localhost:8080/lunchvotes/votes
+Content-Type: application/x-www-form-urlencoded
+
+dmId=400
+
+###
+GET http://localhost:8080/lunchvotes/restaurants
+Accept: application/json
+
+###

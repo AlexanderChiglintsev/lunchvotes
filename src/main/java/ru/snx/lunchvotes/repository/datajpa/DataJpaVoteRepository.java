@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.snx.lunchvotes.model.Vote;
 import ru.snx.lunchvotes.repository.VoteRepository;
+import ru.snx.lunchvotes.repository.adapters.AdapterUserRepository;
 import ru.snx.lunchvotes.repository.adapters.AdapterVoteRepository;
 
 import java.time.LocalDate;
@@ -13,9 +14,11 @@ import java.time.LocalDate;
 public class DataJpaVoteRepository implements VoteRepository {
 
     private final AdapterVoteRepository adapterVoteRepository;
+    private final AdapterUserRepository adapterUserRepository;
 
-    public DataJpaVoteRepository(AdapterVoteRepository adapterVoteRepository) {
+    public DataJpaVoteRepository(AdapterVoteRepository adapterVoteRepository, AdapterUserRepository adapterUserRepository) {
         this.adapterVoteRepository = adapterVoteRepository;
+        this.adapterUserRepository = adapterUserRepository;
     }
 
     @Override
@@ -30,7 +33,8 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote save(Vote vote) {
+    public Vote save(Vote vote, Integer userId) {
+        if (vote.getUser() == null) vote.setUser(adapterUserRepository.getById(userId));
         return adapterVoteRepository.save(vote);
     }
 }

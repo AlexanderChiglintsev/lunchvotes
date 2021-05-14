@@ -10,5 +10,5 @@ public interface VoteRepository {
 
     Vote get(Integer id);
 
-    Vote save(Vote vote);
+    Vote save(Vote vote, Integer userId);
 }

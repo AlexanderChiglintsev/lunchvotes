@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.snx.lunchvotes.model.User;
 import ru.snx.lunchvotes.repository.UserRepository;
 import ru.snx.lunchvotes.repository.adapters.AdapterUserRepository;
-import ru.snx.lunchvotes.utils.NotFoundException;
+import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
 
 @Repository
 @Transactional(readOnly = true)

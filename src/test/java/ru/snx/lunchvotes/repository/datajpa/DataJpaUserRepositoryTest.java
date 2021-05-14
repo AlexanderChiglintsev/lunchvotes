@@ -8,7 +8,7 @@ import ru.snx.lunchvotes.model.Role;
 import ru.snx.lunchvotes.model.User;
 import ru.snx.lunchvotes.repository.AbstractTest;
 import ru.snx.lunchvotes.repository.UserRepository;
-import ru.snx.lunchvotes.utils.NotFoundException;
+import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.snx.lunchvotes.utils.TestData.newUser;

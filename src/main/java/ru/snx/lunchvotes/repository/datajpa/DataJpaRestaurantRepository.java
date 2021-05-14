@@ -2,14 +2,9 @@ package ru.snx.lunchvotes.repository.datajpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.snx.lunchvotes.model.DailyMenu;
 import ru.snx.lunchvotes.model.Restaurant;
-import ru.snx.lunchvotes.model.User;
 import ru.snx.lunchvotes.repository.RestaurantRepository;
-import ru.snx.lunchvotes.repository.UserRepository;
 import ru.snx.lunchvotes.repository.adapters.AdapterRestaurantRepository;
-import ru.snx.lunchvotes.repository.adapters.AdapterUserRepository;
-import ru.snx.lunchvotes.utils.NotFoundException;
 
 import java.util.List;
 

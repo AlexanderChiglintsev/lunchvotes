@@ -18,7 +18,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
 
     @Test
     void save() {
-        Vote saved = voteRepository.save(newVote);
+        Vote saved = voteRepository.save(newVote, admin.getId());
         Assertions.assertThat(newVote)
                 .usingRecursiveComparison()
                 .ignoringFields("user", "dailyMenu")
@@ -30,12 +30,21 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
         Vote copy = new Vote(vote1);
         copy.setId(null);
         copy.setUser(admin);
-        assertThrows(DataIntegrityViolationException.class, () -> voteRepository.save(copy));
+        assertThrows(DataIntegrityViolationException.class, () -> voteRepository.save(copy, user.getId()));
     }
 
     @Test
     void saveNotValid() {
-        checkValidation(() -> voteRepository.save(new Vote(null, dm1, null, user)));
+        checkValidation(() -> voteRepository.save(new Vote(null, dm1, null, user), user.getId()));
+    }
+
+    @Test
+    void getById(){
+        Vote obtained = voteRepository.get(vote1.getId());
+        Assertions.assertThat(vote1)
+                .usingRecursiveComparison()
+                .ignoringFields("user", "dailyMenu")
+                .isEqualTo(obtained);
     }
 
     @Test

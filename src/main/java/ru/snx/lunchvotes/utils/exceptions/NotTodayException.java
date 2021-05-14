@@ -1,4 +1,4 @@
-package ru.snx.lunchvotes.utils;
+package ru.snx.lunchvotes.utils.exceptions;
 
 public class NotTodayException extends RuntimeException {
 

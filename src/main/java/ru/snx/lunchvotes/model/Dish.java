@@ -1,5 +1,7 @@
 package ru.snx.lunchvotes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,6 +31,7 @@ public class Dish {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "daily_menu_id", nullable = false)
+    @JsonIgnore
     private DailyMenu dailyMenu;
 
     public Dish() {
