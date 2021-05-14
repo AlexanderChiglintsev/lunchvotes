@@ -1,11 +1,13 @@
 package ru.snx.lunchvotes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,12 +34,14 @@ public class DailyMenu {
 
     @OneToMany(
             mappedBy = "dailyMenu",
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Dish> dailyDishes;
 
     @OneToMany(mappedBy = "dailyMenu", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Vote> votes;
 
     public DailyMenu() {
@@ -89,6 +93,12 @@ public class DailyMenu {
 
     public void setDailyDishes(List<Dish> dailyDishes) {
         this.dailyDishes = dailyDishes;
+    }
+
+    public void addDish(Dish dish){
+        if (this.dailyDishes.isEmpty()) this.setDailyDishes(new ArrayList<>());
+        dish.setDailyMenu(this);
+        this.getDailyDishes().add(dish);
     }
 
     public List<Vote> getVotes() {

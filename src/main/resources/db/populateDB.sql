@@ -38,7 +38,7 @@ VALUES (200, '2021-05-01'),
 INSERT INTO dishes (description, cost, daily_menu_id)
 VALUES ('Meet', 1000, 400),
        ('Coffee', 250, 400),
-       ('Cherry pie', 4000, 400),
+       ('Cherry pie', 400, 400),
        ('Fish', 1200, 401),
        ('Black tea', 150, 401),
        ('Vegetables', 800, 402),

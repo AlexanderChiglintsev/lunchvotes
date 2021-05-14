@@ -41,7 +41,7 @@ public class Dish {
         this.id = id;
         this.description = description;
         this.cost = cost;
-        this.dailyMenu = new DailyMenu();
+        //this.dailyMenu = new DailyMenu();
     }
 
     public Integer getId() {

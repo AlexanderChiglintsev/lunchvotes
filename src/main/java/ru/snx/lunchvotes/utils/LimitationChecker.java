@@ -1,6 +1,7 @@
 package ru.snx.lunchvotes.utils;
 
 import ru.snx.lunchvotes.model.DailyMenu;
+import ru.snx.lunchvotes.model.Restaurant;
 import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
 import ru.snx.lunchvotes.utils.exceptions.NotTodayException;
 import ru.snx.lunchvotes.utils.exceptions.OutOfTimeException;
@@ -17,14 +18,23 @@ public class LimitationChecker {
         return true;
     }
 
-    public static boolean isExistAndToday(DailyMenu dailyMenu){
-        if (dailyMenu == null) throw new NotFoundException(
-                "Daily menu with such id not found!"
+    public static void checkExistAndTodayDailyMenu(DailyMenu dailyMenu){
+        if (notExist(dailyMenu)) throw new NotFoundException(
+                "Daily menu not found!"
         );
         if (!dailyMenu.getDate().isEqual(LocalDate.now())) throw new NotTodayException(
                 "This is not today's menu!"
         );
-        return true;
+    }
+
+    public static void checkExistRestaurant(Restaurant restaurant) {
+        if (notExist(restaurant)) throw new NotFoundException(
+                "Restaurant not found!"
+        );
+    }
+
+    private static <T> boolean notExist(T object){
+        return object == null;
     }
 
 }

@@ -26,7 +26,7 @@ public class TestData {
     private static final int DISH_ID = Dish.START_SEQ;
     public static final Dish dish1 = new Dish(DISH_ID, "Meet", 1000);
     public static final Dish dish2 = new Dish(DISH_ID + 1, "Coffee", 250);
-    public static final Dish dish3 = new Dish(DISH_ID + 2, "Cherry pie", 4000);
+    public static final Dish dish3 = new Dish(DISH_ID + 2, "Cherry pie", 400);
     public static final Dish dish4 = new Dish(DISH_ID + 3, "Fish", 1200);
     public static final Dish dish5 = new Dish(DISH_ID + 4, "Black tea", 150);
     public static final Dish dish6 = new Dish(DISH_ID + 5, "Vegetables", 800);
@@ -64,5 +64,6 @@ public class TestData {
     static {
         dm1.setVotes(List.of(vote1, vote2));
         dailyMenus = List.of(dm1, dm2, dm3);
+        dish17.setDailyMenu(newDailyMenu);
     }
 }

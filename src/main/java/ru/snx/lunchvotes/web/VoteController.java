@@ -9,22 +9,24 @@ import ru.snx.lunchvotes.model.Vote;
 import ru.snx.lunchvotes.repository.DailyMenuRepository;
 import ru.snx.lunchvotes.repository.UserRepository;
 import ru.snx.lunchvotes.repository.VoteRepository;
+import ru.snx.lunchvotes.to.VoteResultTo;
 import ru.snx.lunchvotes.utils.SecurityUtil;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
+
+import static ru.snx.lunchvotes.utils.ToConverter.getVoteResultTo;
 
 @RestController
 @RequestMapping(value = "/votes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     private final VoteRepository voteRepository;
     private final DailyMenuRepository dailyMenuRepository;
-    private final UserRepository userRepository;
 
     public VoteController(VoteRepository voteRepository, DailyMenuRepository dailyMenuRepository, UserRepository userRepository, SecurityUtil securityUtil) {
         this.voteRepository = voteRepository;
         this.dailyMenuRepository = dailyMenuRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/{id}")
@@ -36,7 +38,7 @@ public class VoteController {
     public ResponseEntity<Vote> save(@RequestParam Integer dmId) {
         //isValidTime();
         DailyMenu dailyMenu = dailyMenuRepository.get(dmId);
-        //isExistAndToday(dailyMenu);
+        //checkExistAndTodayDailyMenu(dailyMenu);
         Vote v = voteRepository.getByDate(LocalDate.now(), SecurityUtil.getUserId());
         if (v == null) {
             v = new Vote(null, dailyMenu, LocalDate.now(), null);
@@ -49,5 +51,10 @@ public class VoteController {
                 .path("/votes/{id}")
                 .buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(saved);
+    }
+
+    @GetMapping("/today")
+    public List<VoteResultTo> getTodayVotes(){
+        return getVoteResultTo(dailyMenuRepository.getAllWithVotes(LocalDate.of(2021, 5, 1)));
     }
 }
