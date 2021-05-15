@@ -1,5 +1,7 @@
 package ru.snx.lunchvotes.repository.datajpa;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.snx.lunchvotes.model.Restaurant;
@@ -20,6 +22,7 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
 
     @Override
     @Transactional
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant save(Restaurant restaurant) {
         return adapterRestaurantRepository.save(restaurant);
     }
@@ -30,6 +33,7 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     }
 
     @Override
+    @Cacheable(value = "restaurants")
     public List<Restaurant> getAll() {
         return adapterRestaurantRepository.findAll();
     }

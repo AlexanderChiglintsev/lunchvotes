@@ -14,7 +14,7 @@ import static ru.snx.lunchvotes.utils.TestData.*;
 class DataJpaRestaurantRepositoryTest extends AbstractTest {
 
     @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
     @Test
     void save() {

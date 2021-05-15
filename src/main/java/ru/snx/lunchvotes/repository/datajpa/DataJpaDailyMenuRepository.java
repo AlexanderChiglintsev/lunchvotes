@@ -1,5 +1,7 @@
 package ru.snx.lunchvotes.repository.datajpa;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.snx.lunchvotes.model.DailyMenu;
@@ -21,6 +23,7 @@ public class DataJpaDailyMenuRepository implements DailyMenuRepository {
 
     @Transactional
     @Override
+    @CacheEvict(value = "todayMenus", allEntries = true)
     public DailyMenu save(DailyMenu dailyMenu) {
         return adapterDailyMenuRepository.save(dailyMenu);
     }
@@ -31,6 +34,7 @@ public class DataJpaDailyMenuRepository implements DailyMenuRepository {
     }
 
     @Override
+    @Cacheable(value = "todayMenus")
     public List<DailyMenu> getAll(LocalDate localDate) {
         return adapterDailyMenuRepository.findAllByDate(localDate);
     }

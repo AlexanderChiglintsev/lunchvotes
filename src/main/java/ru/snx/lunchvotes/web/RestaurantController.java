@@ -1,7 +1,5 @@
 package ru.snx.lunchvotes.web;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +26,11 @@ public class RestaurantController {
     }
 
     @GetMapping
-    @Cacheable(value = "restaurants")
     public List<Restaurant> getAll() {
         return restaurantRepository.getAll();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @CacheEvict(value = "restaurants", allEntries = true)
     public ResponseEntity<Restaurant> save(@RequestBody Restaurant restaurant) {
         Restaurant created = restaurantRepository.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
