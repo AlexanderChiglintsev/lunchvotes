@@ -10,7 +10,6 @@
     <packaging>war</packaging>
 
     <name>Lunch Votes</name>
-    <url>http://www.example.com</url>
 
     <properties>
         <java.version>15</java.version>
@@ -27,6 +26,9 @@
         <spring.security.version>5.4.5</spring.security.version>
         <spring-data-jpa.version>2.5.0</spring-data-jpa.version>
         <jackson-json.version>2.12.2</jackson-json.version>
+
+        <!-- Security -->
+        <spring-security.version>5.4.6</spring-security.version>
 
         <!-- Tests -->
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
@@ -59,6 +61,18 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring-data-jpa.version}</version>
+        </dependency>
+
+        <!--Security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
 
         <!-- DB -->
@@ -114,6 +128,12 @@
         </dependency>
 
         <!-- Web -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -245,4 +265,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
