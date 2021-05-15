@@ -21,6 +21,8 @@ public class TestData {
     public static final Restaurant restaurantOne = new Restaurant(R1_ID, "RestaurantOne");
     public static final Restaurant restaurantTwo = new Restaurant(R2_ID, "RestaurantTwo");
     public static final Restaurant restaurantThree = new Restaurant(R3_ID, "RestaurantThree");
+    public static final Restaurant restaurantNew = new Restaurant(R3_ID + 1, "RestaurantNew");
+    public static final List<Restaurant> restaurants;
 
     //Dishes
     private static final int DISH_ID = Dish.START_SEQ;
@@ -65,5 +67,6 @@ public class TestData {
         dm1.setVotes(List.of(vote1, vote2));
         dailyMenus = List.of(dm1, dm2, dm3);
         dish17.setDailyMenu(newDailyMenu);
+        restaurants = List.of(restaurantOne, restaurantTwo, restaurantThree);
     }
 }

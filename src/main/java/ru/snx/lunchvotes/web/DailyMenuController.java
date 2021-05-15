@@ -1,5 +1,7 @@
 package ru.snx.lunchvotes.web;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +38,13 @@ public class DailyMenuController {
     }
 
     @GetMapping
+    @Cacheable(value = "todayMenus")
     public List<DailyMenuTo> getTodayMenus(){
         return ToConverter.getDailyMenuTo(dailyMenuRepository.getAllWithVotes(LocalDate.of(2021, 5, 1)));
     }
 
     @PostMapping
+    @CacheEvict(value = "todayMenus", allEntries = true)
     public ResponseEntity<DailyMenu> createDailyMenu(@RequestParam Integer restaurantId){
         Restaurant restaurant = restaurantRepository.get(restaurantId);
         checkExistRestaurant(restaurant);
@@ -53,6 +57,7 @@ public class DailyMenuController {
     }
 
     @PatchMapping("/{id}")
+    @CacheEvict(value = "todayMenus", allEntries = true)
     public ResponseEntity<DailyMenu> addDish(@PathVariable Integer id, @RequestBody Dish dish){
         DailyMenu dailyMenu = dailyMenuRepository.get(id);
         checkExistAndTodayDailyMenu(dailyMenu);
