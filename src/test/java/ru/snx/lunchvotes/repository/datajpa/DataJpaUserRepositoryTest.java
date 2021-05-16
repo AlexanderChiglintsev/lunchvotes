@@ -51,10 +51,10 @@ class DataJpaUserRepositoryTest extends AbstractTest {
 
     @Test
     void saveNotValid() {
-        checkValidation(() -> userRepository.save(new User(null, "", "test@test.ru", "12345", Role.USER)));
-        checkValidation(() -> userRepository.save(new User(null, "user", "test", "12345", Role.USER)));
-        checkValidation(() -> userRepository.save(new User(null, "user", "test@test.ru", "1", Role.USER)));
-        checkValidation(() -> userRepository.save(new User(null, "user", "test@test.ru", "1234555555555555555", Role.USER)));
+        checkValidation(() -> userRepository.save(new User(null, "", "test@test.ru", "12345", Role.ROLE_USER)));
+        checkValidation(() -> userRepository.save(new User(null, "user", "test", "12345", Role.ROLE_USER)));
+        checkValidation(() -> userRepository.save(new User(null, "user", "test@test.ru", "1", Role.ROLE_USER)));
+        checkValidation(() -> userRepository.save(new User(null, "user", "test@test.ru", "1234555555555555555", Role.ROLE_USER)));
     }
 
     @Test

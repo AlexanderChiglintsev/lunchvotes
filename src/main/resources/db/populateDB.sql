@@ -16,8 +16,8 @@ VALUES ('user', 'user@user.ru', 'user'),
        ('admin', 'admin@admin.com', 'admin');
 
 INSERT INTO user_roles (user_id, role)
-VALUES (100, 'USER'),
-       (101, 'ADMIN');
+VALUES (100, 'ROLE_USER'),
+       (101, 'ROLE_ADMIN');
 
 /*start with 200*/
 INSERT INTO restaurants (name)

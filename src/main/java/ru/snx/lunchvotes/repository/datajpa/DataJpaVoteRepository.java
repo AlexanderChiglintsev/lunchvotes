@@ -22,8 +22,8 @@ public class DataJpaVoteRepository implements VoteRepository {
     }
 
     @Override
-    public Vote getByDate(LocalDate localDate, Integer userId) {
-        return adapterVoteRepository.getVoteByDate(localDate, userId);
+    public Vote getByDate(LocalDate localDate, String userEmail) {
+        return adapterVoteRepository.getVoteByDate(localDate, userEmail);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     @Override
     @Transactional
-    public Vote save(Vote vote, Integer userId) {
-        if (vote.getUser() == null) vote.setUser(adapterUserRepository.getById(userId));
+    public Vote save(Vote vote, String userEmail) {
+        if (vote.getUser() == null) vote.setUser(adapterUserRepository.getByEmail(userEmail));
         return adapterVoteRepository.save(vote);
     }
 }

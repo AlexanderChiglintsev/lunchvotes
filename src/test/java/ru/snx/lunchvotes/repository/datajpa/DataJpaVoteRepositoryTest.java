@@ -18,7 +18,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
 
     @Test
     void save() {
-        Vote saved = voteRepository.save(newVote, admin.getId());
+        Vote saved = voteRepository.save(newVote, admin.getEmail());
         Assertions.assertThat(newVote)
                 .usingRecursiveComparison()
                 .ignoringFields("user", "dailyMenu")
@@ -30,12 +30,12 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
         Vote copy = new Vote(vote1);
         copy.setId(null);
         copy.setUser(admin);
-        assertThrows(DataIntegrityViolationException.class, () -> voteRepository.save(copy, user.getId()));
+        assertThrows(DataIntegrityViolationException.class, () -> voteRepository.save(copy, user.getEmail()));
     }
 
     @Test
     void saveNotValid() {
-        checkValidation(() -> voteRepository.save(new Vote(null, dm1, null, user), user.getId()));
+        checkValidation(() -> voteRepository.save(new Vote(null, dm1, null, user), user.getEmail()));
     }
 
     @Test
@@ -49,7 +49,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
 
     @Test
     void getByDate(){
-        Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getId());
+        Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getEmail());
         Assertions.assertThat(vote1)
                 .usingRecursiveComparison()
                 .ignoringFields("user", "dailyMenu")
@@ -58,7 +58,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
 
     @Test
     void getByDateNotExist(){
-        Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getId());
+        Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getEmail());
         Assertions.assertThat(vote1)
                 .usingRecursiveComparison()
                 .ignoringFields("user", "dailyMenu")

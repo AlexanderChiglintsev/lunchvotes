@@ -7,7 +7,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.snx.lunchvotes.model.DailyMenu;
 import ru.snx.lunchvotes.model.Vote;
 import ru.snx.lunchvotes.repository.DailyMenuRepository;
-import ru.snx.lunchvotes.repository.UserRepository;
 import ru.snx.lunchvotes.repository.VoteRepository;
 import ru.snx.lunchvotes.to.VoteResultTo;
 import ru.snx.lunchvotes.utils.SecurityUtil;
@@ -24,7 +23,7 @@ public class VoteController {
     private final VoteRepository voteRepository;
     private final DailyMenuRepository dailyMenuRepository;
 
-    public VoteController(VoteRepository voteRepository, DailyMenuRepository dailyMenuRepository, UserRepository userRepository, SecurityUtil securityUtil) {
+    public VoteController(VoteRepository voteRepository, DailyMenuRepository dailyMenuRepository) {
         this.voteRepository = voteRepository;
         this.dailyMenuRepository = dailyMenuRepository;
     }
@@ -39,13 +38,13 @@ public class VoteController {
         //isValidTime();
         DailyMenu dailyMenu = dailyMenuRepository.get(dmId);
         //checkExistAndTodayDailyMenu(dailyMenu);
-        Vote v = voteRepository.getByDate(LocalDate.now(), SecurityUtil.getUserId());
+        Vote v = voteRepository.getByDate(LocalDate.now(), SecurityUtil.authUserEmail());
         if (v == null) {
             v = new Vote(null, dailyMenu, LocalDate.now(), null);
         } else {
             v.setDailyMenu(dailyMenu);
         }
-        Vote saved = voteRepository.save(v, SecurityUtil.getUserId());
+        Vote saved = voteRepository.save(v, SecurityUtil.authUserEmail());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/votes/{id}")

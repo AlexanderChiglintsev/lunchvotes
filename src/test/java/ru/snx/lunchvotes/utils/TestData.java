@@ -10,9 +10,9 @@ public class TestData {
     //Users
     public static final int USER_ID = User.START_SEQ;
     public static final int ADMIN_ID = User.START_SEQ + 1;
-    public static final User user = new User(USER_ID, "user", "user@user.ru", "user", Role.USER);
-    public static final User admin = new User(ADMIN_ID, "admin", "admin@admin.ru", "admin", Role.ADMIN);
-    public static final User newUser = new User(USER_ID + 2, "newUser", "new@user.ru", "newuser", Role.USER);
+    public static final User user = new User(USER_ID, "user", "user@user.ru", "user", Role.ROLE_USER);
+    public static final User admin = new User(ADMIN_ID, "admin", "admin@admin.ru", "admin", Role.ROLE_ADMIN);
+    public static final User newUser = new User(USER_ID + 2, "newUser", "new@user.ru", "newuser", Role.ROLE_USER);
 
     //Restaurants
     public static final int R1_ID = Restaurant.START_SEQ;
