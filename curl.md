@@ -1,4 +1,4 @@
-### curl samples (application deployed at application context `topjava`).
+### curl samples (application deployed at application context `lunchvotes`).
 
 #### Get all restaurants
 curl.exe -s http://localhost:8080/lunchvotes/restaurants --user admin@admin.com:admin
