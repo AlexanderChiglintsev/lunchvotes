@@ -39,7 +39,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
     }
 
     @Test
-    void getById(){
+    void getById() {
         Vote obtained = voteRepository.get(vote1.getId());
         Assertions.assertThat(vote1)
                 .usingRecursiveComparison()
@@ -48,7 +48,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
     }
 
     @Test
-    void getByDate(){
+    void getByDate() {
         Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getEmail());
         Assertions.assertThat(vote1)
                 .usingRecursiveComparison()
@@ -57,7 +57,7 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
     }
 
     @Test
-    void getByDateNotExist(){
+    void getByDateNotExist() {
         Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getEmail());
         Assertions.assertThat(vote1)
                 .usingRecursiveComparison()

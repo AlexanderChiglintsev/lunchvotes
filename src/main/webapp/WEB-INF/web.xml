@@ -8,7 +8,7 @@
 
     <context-param>
         <param-name>spring.profiles.default</param-name>
-        <param-value>tests</param-value>
+        <param-value>tomcat</param-value>
     </context-param>
 
     <context-param>

@@ -37,12 +37,12 @@ public class DailyMenuController {
     }
 
     @GetMapping
-    public List<DailyMenuTo> getTodayMenus(){
-        return ToConverter.getDailyMenuTo(dailyMenuRepository.getAll(LocalDate.of(2021, 5, 1)));
+    public List<DailyMenuTo> getTodayMenus() {
+        return ToConverter.getDailyMenuTo(dailyMenuRepository.getAll(LocalDate.now()));
     }
 
     @PostMapping
-    public ResponseEntity<DailyMenu> createDailyMenu(@RequestParam Integer restaurantId){
+    public ResponseEntity<DailyMenu> createDailyMenu(@RequestParam Integer restaurantId) {
         Restaurant restaurant = restaurantRepository.get(restaurantId);
         checkExistRestaurant(restaurant);
         DailyMenu created = dailyMenuRepository.save(new DailyMenu(null, restaurant, LocalDate.now()));
@@ -55,7 +55,7 @@ public class DailyMenuController {
 
     @PatchMapping("/{id}")
     @CacheEvict(value = "todayMenus", allEntries = true)
-    public ResponseEntity<DailyMenu> addDish(@PathVariable Integer id, @RequestBody Dish dish){
+    public ResponseEntity<DailyMenu> addDish(@PathVariable Integer id, @RequestBody Dish dish) {
         DailyMenu dailyMenu = dailyMenuRepository.get(id);
         checkExistAndTodayDailyMenu(dailyMenu);
         dailyMenu.addDish(dish);

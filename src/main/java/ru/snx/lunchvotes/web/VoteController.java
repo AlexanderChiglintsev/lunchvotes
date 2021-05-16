@@ -15,6 +15,8 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.snx.lunchvotes.utils.LimitationChecker.checkExistAndTodayDailyMenu;
+import static ru.snx.lunchvotes.utils.LimitationChecker.isValidTime;
 import static ru.snx.lunchvotes.utils.ToConverter.getVoteResultTo;
 
 @RestController
@@ -35,9 +37,9 @@ public class VoteController {
 
     @PostMapping()
     public ResponseEntity<Vote> save(@RequestParam Integer dmId) {
-        //isValidTime();
+        isValidTime();
         DailyMenu dailyMenu = dailyMenuRepository.get(dmId);
-        //checkExistAndTodayDailyMenu(dailyMenu);
+        checkExistAndTodayDailyMenu(dailyMenu);
         Vote v = voteRepository.getByDate(LocalDate.now(), SecurityUtil.authUserEmail());
         if (v == null) {
             v = new Vote(null, dailyMenu, LocalDate.now(), null);
@@ -53,7 +55,7 @@ public class VoteController {
     }
 
     @GetMapping("/today")
-    public List<VoteResultTo> getTodayVotes(){
-        return getVoteResultTo(dailyMenuRepository.getAllWithVotes(LocalDate.of(2021, 5, 1)));
+    public List<VoteResultTo> getTodayVotes() {
+        return getVoteResultTo(dailyMenuRepository.getAllWithVotes(LocalDate.now()));
     }
 }

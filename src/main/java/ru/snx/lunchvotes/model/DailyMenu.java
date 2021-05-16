@@ -95,7 +95,7 @@ public class DailyMenu {
         this.dailyDishes = dailyDishes;
     }
 
-    public void addDish(Dish dish){
+    public void addDish(Dish dish) {
         if (this.dailyDishes.isEmpty()) this.setDailyDishes(new ArrayList<>());
         dish.setDailyMenu(this);
         this.getDailyDishes().add(dish);

@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface AdapterDailyMenuRepository extends JpaRepository<DailyMenu, Integer> {
 
-    //@Query("SELECT dm FROM DailyMenu dm WHERE dm.date = :localDate")
     List<DailyMenu> findAllByDate(LocalDate localDate);
 
     @Query("SELECT DISTINCT dm FROM DailyMenu dm LEFT JOIN FETCH dm.votes WHERE dm.date = :localDate")

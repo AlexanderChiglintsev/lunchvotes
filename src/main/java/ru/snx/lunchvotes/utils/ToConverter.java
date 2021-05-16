@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ToConverter {
 
-    public static List<DailyMenuTo> getDailyMenuTo(List<DailyMenu> dailyMenus){
+    public static List<DailyMenuTo> getDailyMenuTo(List<DailyMenu> dailyMenus) {
         if (dailyMenus != null) {
             return dailyMenus.stream().map((dm) -> new DailyMenuTo(
                     dm.getId(),

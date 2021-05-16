@@ -58,7 +58,7 @@ class DataJpaUserRepositoryTest extends AbstractTest {
     }
 
     @Test
-    void getById(){
+    void getById() {
         User obtained = userRepository.get(user.getId());
         Assertions.assertThat(user)
                 .usingRecursiveComparison()

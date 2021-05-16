@@ -11,14 +11,14 @@ import java.time.LocalTime;
 
 public class LimitationChecker {
 
-    public static boolean isValidTime(){
+    public static boolean isValidTime() {
         if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
             throw new OutOfTimeException("Too late for voting today!");
         }
         return true;
     }
 
-    public static void checkExistAndTodayDailyMenu(DailyMenu dailyMenu){
+    public static void checkExistAndTodayDailyMenu(DailyMenu dailyMenu) {
         if (notExist(dailyMenu)) throw new NotFoundException(
                 "Daily menu not found!"
         );
@@ -33,7 +33,7 @@ public class LimitationChecker {
         );
     }
 
-    private static <T> boolean notExist(T object){
+    private static <T> boolean notExist(T object) {
         return object == null;
     }
 

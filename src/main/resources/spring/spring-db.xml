@@ -18,12 +18,6 @@
             <property name="username" value="${database.username}"/>
             <property name="password" value="${database.password}"/>
         </bean>
-
-        <!--Init and populate DB on startup-->
-        <jdbc:initialize-database enabled="${database.init}">
-            <jdbc:script location="${jdbc.initLocation}"/>
-            <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
-        </jdbc:initialize-database>
     </beans>
 
     <beans profile="tomcat">
@@ -33,6 +27,13 @@
     </beans>
 
     <beans profile="tomcat, tests">
+
+        <!--Init and populate DB on startup-->
+        <jdbc:initialize-database enabled="${database.init}">
+            <jdbc:script location="${jdbc.initLocation}"/>
+            <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+        </jdbc:initialize-database>
+
         <!--Configuring entityManagerFactory for JPA over Hibernate-->
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
               p:dataSource-ref="dataSource"
