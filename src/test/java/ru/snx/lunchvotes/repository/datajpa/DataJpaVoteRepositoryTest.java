@@ -48,6 +48,15 @@ class DataJpaVoteRepositoryTest extends AbstractTest {
     }
 
     @Test
+    void getWithUser() {
+        Vote obtained = voteRepository.getWithUser(vote1.getId());
+        Assertions.assertThat(vote1)
+                .usingRecursiveComparison()
+                .ignoringFields("user.votes", "dailyMenu")
+                .isEqualTo(obtained);
+    }
+
+    @Test
     void getByDate() {
         Vote obtained = voteRepository.getByDate(vote1.getDate(), vote1.getUser().getEmail());
         Assertions.assertThat(vote1)

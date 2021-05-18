@@ -14,6 +14,6 @@ public interface AdapterVoteRepository extends CrudRepository<Vote, Integer> {
                        @Param("userEmail") String userEmail
     );
 
-    @Query("SELECT v FROM Vote v LEFT JOIN FETCH User u ON v.user = u WHERE v.id = :voteId")
+    @Query("SELECT v FROM Vote v JOIN FETCH v.user u WHERE v.id = :voteId")
     Vote getVoteWithUser(@Param("voteId") Integer voteId);
 }
