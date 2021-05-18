@@ -8,12 +8,12 @@
 
     <http use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
         <http-basic/>
-        <intercept-url pattern="/restaurants/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/restaurants/**" access="hasAuthority('ADMIN')"/>
         <intercept-url pattern="/votes/**" access="isAuthenticated()"/>
         <intercept-url pattern="/dailyMenus/**" access="isAuthenticated()" method="GET"/>
-        <intercept-url pattern="/dailyMenus/**" access="hasRole('ADMIN')" method="PATCH"/>
+        <intercept-url pattern="/dailyMenus/**" access="hasAuthority('ADMIN')" method="PATCH"/>
         <intercept-url pattern="/dailyMenus" access="isAuthenticated()" method="GET"/>
-        <intercept-url pattern="/dailyMenus/**" access="hasRole('ADMIN')" method="POST"/>
+        <intercept-url pattern="/dailyMenus/**" access="hasAuthority('ADMIN')" method="POST"/>
 
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
         <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
