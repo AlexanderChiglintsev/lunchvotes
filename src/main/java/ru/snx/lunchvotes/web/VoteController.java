@@ -15,8 +15,7 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.snx.lunchvotes.utils.LimitationChecker.checkExistAndTodayDailyMenu;
-import static ru.snx.lunchvotes.utils.LimitationChecker.isValidTime;
+import static ru.snx.lunchvotes.utils.LimitationChecker.*;
 import static ru.snx.lunchvotes.utils.ToConverter.getVoteResultTo;
 
 @RestController
@@ -32,6 +31,8 @@ public class VoteController {
 
     @GetMapping("/{id}")
     public Vote get(@PathVariable Integer id) {
+        Vote v = voteRepository.getWithUser(id);
+        checkVoteOwner(v, SecurityUtil.authUserEmail());
         return voteRepository.get(id);
     }
 

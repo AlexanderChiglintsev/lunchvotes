@@ -35,6 +35,6 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     @Override
     @Cacheable(value = "restaurants")
     public List<Restaurant> getAll() {
-        return adapterRestaurantRepository.findAll();
+        return (List<Restaurant>) adapterRestaurantRepository.findAll();
     }
 }

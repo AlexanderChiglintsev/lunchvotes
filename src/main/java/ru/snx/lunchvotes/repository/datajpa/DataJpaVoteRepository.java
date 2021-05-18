@@ -32,6 +32,11 @@ public class DataJpaVoteRepository implements VoteRepository {
     }
 
     @Override
+    public Vote getWithUser(Integer id) {
+        return adapterVoteRepository.getVoteWithUser(id);
+    }
+
+    @Override
     @Transactional
     public Vote save(Vote vote, String userEmail) {
         if (vote.getUser() == null) vote.setUser(adapterUserRepository.getByEmail(userEmail));

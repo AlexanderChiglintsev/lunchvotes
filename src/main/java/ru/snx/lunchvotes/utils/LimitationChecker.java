@@ -2,12 +2,15 @@ package ru.snx.lunchvotes.utils;
 
 import ru.snx.lunchvotes.model.DailyMenu;
 import ru.snx.lunchvotes.model.Restaurant;
+import ru.snx.lunchvotes.model.Vote;
 import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
+import ru.snx.lunchvotes.utils.exceptions.NotOwnerException;
 import ru.snx.lunchvotes.utils.exceptions.NotTodayException;
 import ru.snx.lunchvotes.utils.exceptions.OutOfTimeException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class LimitationChecker {
 
@@ -33,8 +36,11 @@ public class LimitationChecker {
         );
     }
 
+    public static void checkVoteOwner(Vote v, String email) {
+        if (!Objects.equals(v.getUser().getEmail(), email)) throw new NotOwnerException("Can't get, not owner!");
+    }
+
     private static <T> boolean notExist(T object) {
         return object == null;
     }
-
 }

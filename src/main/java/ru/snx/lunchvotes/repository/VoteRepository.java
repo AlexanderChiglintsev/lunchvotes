@@ -10,5 +10,7 @@ public interface VoteRepository {
 
     Vote get(Integer id);
 
+    Vote getWithUser(Integer id);
+
     Vote save(Vote vote, String userEmail);
 }
