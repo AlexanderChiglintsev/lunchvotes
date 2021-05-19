@@ -11,7 +11,7 @@ public class TestData {
     public static final int USER_ID = User.START_SEQ;
     public static final int ADMIN_ID = User.START_SEQ + 1;
     public static final User user = new User(USER_ID, "user", "user@user.ru", "user", Role.USER);
-    public static final User admin = new User(ADMIN_ID, "admin", "admin@admin.ru", "admin", Role.ADMIN);
+    public static final User admin = new User(ADMIN_ID, "admin", "admin@admin.com", "admin", Role.ADMIN);
     public static final User newUser = new User(USER_ID + 2, "newUser", "new@user.ru", "newuser", Role.USER);
 
     //Restaurants
@@ -52,7 +52,7 @@ public class TestData {
     public static final DailyMenu dm4 = new DailyMenu(DAILY_MENU_ID + 3, restaurantOne, LocalDate.of(2021, 5, 2), dish9, dish10);
     public static final DailyMenu dm5 = new DailyMenu(DAILY_MENU_ID + 4, restaurantTwo, LocalDate.of(2021, 5, 2), dish11, dish12, dish13);
     public static final DailyMenu dm6 = new DailyMenu(DAILY_MENU_ID + 5, restaurantThree, LocalDate.of(2021, 5, 2), dish14, dish15, dish16, dish17);
-    public static final DailyMenu newDailyMenu = new DailyMenu(DAILY_MENU_ID + 6, restaurantThree, LocalDate.of(2021, 5, 1), dish17);
+    public static final DailyMenu newDailyMenu = new DailyMenu(DAILY_MENU_ID + 6, restaurantThree, LocalDate.of(2021, 5, 3), dish17);
 
     //Votes
     public static final int VOTE_ID = Vote.START_SEQ;
