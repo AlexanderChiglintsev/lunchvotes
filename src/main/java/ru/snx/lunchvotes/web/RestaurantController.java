@@ -7,6 +7,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.snx.lunchvotes.model.Restaurant;
 import ru.snx.lunchvotes.repository.RestaurantRepository;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RestaurantController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> save(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> save(@Valid @RequestBody Restaurant restaurant) {
         Restaurant created = restaurantRepository.save(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/restaurants/{id}")

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "dishes",
         uniqueConstraints = @UniqueConstraint(columnNames = {"description", "cost", "daily_menu_id"},
-                name = "unique_dish_daily_menu_idx")
+                name = "dish_daily_menu_unique_idx")
 )
 public class Dish {
 

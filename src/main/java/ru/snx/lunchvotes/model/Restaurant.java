@@ -2,6 +2,7 @@ package ru.snx.lunchvotes.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "restaurants")
@@ -17,6 +18,7 @@ public class Restaurant {
 
     @Column(name = "name", nullable = false)
     @NotBlank
+    @Size(min = 2, max = 60)
     private String name;
 
     public Restaurant() {

@@ -12,7 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "daily_menu")
+@Table(name = "daily_menu",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "date"},
+                name = "restaurant_date_unique_idx")
+)
 public class DailyMenu {
 
     public static final int START_SEQ = 400;

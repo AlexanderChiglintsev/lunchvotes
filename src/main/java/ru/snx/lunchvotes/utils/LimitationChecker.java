@@ -1,5 +1,7 @@
 package ru.snx.lunchvotes.utils;
 
+import org.springframework.core.NestedExceptionUtils;
+import org.springframework.lang.NonNull;
 import ru.snx.lunchvotes.model.DailyMenu;
 import ru.snx.lunchvotes.model.Restaurant;
 import ru.snx.lunchvotes.model.Vote;
@@ -36,6 +38,13 @@ public class LimitationChecker {
 
     public static void checkVoteOwner(Vote v, String email) {
         if (!Objects.equals(v.getUser().getEmail(), email)) throw new NotOwnerException("Can't get, not owner!");
+    }
+
+    //  https://stackoverflow.com/a/65442410/548473
+    @NonNull
+    public static Throwable getRootCause(@NonNull Throwable t) {
+        Throwable rootCause = NestedExceptionUtils.getRootCause(t);
+        return rootCause != null ? rootCause : t;
     }
 
     private static <T> boolean notExist(T object) {
