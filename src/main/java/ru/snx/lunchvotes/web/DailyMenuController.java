@@ -10,10 +10,10 @@ import ru.snx.lunchvotes.model.Restaurant;
 import ru.snx.lunchvotes.repository.DailyMenuRepository;
 import ru.snx.lunchvotes.repository.RestaurantRepository;
 import ru.snx.lunchvotes.to.DailyMenuTo;
+import ru.snx.lunchvotes.utils.DateContainer;
 import ru.snx.lunchvotes.utils.ToConverter;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import static ru.snx.lunchvotes.utils.LimitationChecker.checkExistAndTodayDailyMenu;
@@ -37,14 +37,14 @@ public class DailyMenuController {
 
     @GetMapping
     public List<DailyMenuTo> getTodayMenus() {
-        return ToConverter.getDailyMenuTo(dailyMenuRepository.getAll(LocalDate.now()));
+        return ToConverter.getDailyMenuTo(dailyMenuRepository.getAll(DateContainer.getDate()));
     }
 
     @PostMapping
     public ResponseEntity<DailyMenu> createDailyMenu(@RequestParam Integer restaurantId) {
         Restaurant restaurant = restaurantRepository.get(restaurantId);
         checkExistRestaurant(restaurant);
-        DailyMenu created = dailyMenuRepository.save(new DailyMenu(null, restaurant, LocalDate.now()));
+        DailyMenu created = dailyMenuRepository.save(new DailyMenu(null, restaurant, DateContainer.getDate()));
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/dailyMenus/{id}")

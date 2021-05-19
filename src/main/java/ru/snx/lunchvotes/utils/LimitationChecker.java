@@ -8,24 +8,22 @@ import ru.snx.lunchvotes.utils.exceptions.NotOwnerException;
 import ru.snx.lunchvotes.utils.exceptions.NotTodayException;
 import ru.snx.lunchvotes.utils.exceptions.OutOfTimeException;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
 public class LimitationChecker {
 
-    public static boolean isValidTime() {
+    public static void isValidTime() {
         if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
             throw new OutOfTimeException("Too late for voting today!");
         }
-        return true;
     }
 
     public static void checkExistAndTodayDailyMenu(DailyMenu dailyMenu) {
         if (notExist(dailyMenu)) throw new NotFoundException(
                 "Daily menu not found!"
         );
-        if (!dailyMenu.getDate().isEqual(LocalDate.now())) throw new NotTodayException(
+        if (!dailyMenu.getDate().isEqual(DateContainer.getDate())) throw new NotTodayException(
                 "This is not today's menu!"
         );
     }

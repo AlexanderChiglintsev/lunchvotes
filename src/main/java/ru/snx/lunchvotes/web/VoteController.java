@@ -9,10 +9,10 @@ import ru.snx.lunchvotes.model.Vote;
 import ru.snx.lunchvotes.repository.DailyMenuRepository;
 import ru.snx.lunchvotes.repository.VoteRepository;
 import ru.snx.lunchvotes.to.VoteResultTo;
+import ru.snx.lunchvotes.utils.DateContainer;
 import ru.snx.lunchvotes.utils.SecurityUtil;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import static ru.snx.lunchvotes.utils.LimitationChecker.*;
@@ -41,9 +41,9 @@ public class VoteController {
         isValidTime();
         DailyMenu dailyMenu = dailyMenuRepository.get(dmId);
         checkExistAndTodayDailyMenu(dailyMenu);
-        Vote v = voteRepository.getByDate(LocalDate.now(), SecurityUtil.authUserEmail());
+        Vote v = voteRepository.getByDate(DateContainer.getDate(), SecurityUtil.authUserEmail());
         if (v == null) {
-            v = new Vote(null, dailyMenu, LocalDate.now(), null);
+            v = new Vote(null, dailyMenu, DateContainer.getDate(), null);
         } else {
             v.setDailyMenu(dailyMenu);
         }
@@ -57,6 +57,6 @@ public class VoteController {
 
     @GetMapping("/today")
     public List<VoteResultTo> getTodayVotes() {
-        return getVoteResultTo(dailyMenuRepository.getAllWithVotes(LocalDate.now()));
+        return getVoteResultTo(dailyMenuRepository.getAllWithVotes(DateContainer.getDate()));
     }
 }
