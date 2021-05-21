@@ -13,4 +13,12 @@ public class ErrorInfo {
         this.url = url.toString();
         this.errors = new String[]{errors};
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String[] getErrors() {
+        return errors;
+    }
 }

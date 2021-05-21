@@ -16,7 +16,7 @@ import java.util.Objects;
 public class LimitationChecker {
 
     public static void isValidTime() {
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+        if (DateContainer.getTime().isAfter(LocalTime.of(11, 0))) {
             throw new OutOfTimeException("Too late for voting today!");
         }
     }

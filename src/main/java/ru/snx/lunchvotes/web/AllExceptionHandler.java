@@ -1,4 +1,4 @@
-package ru.snx.lunchvotes.utils;
+package ru.snx.lunchvotes.web;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
@@ -8,13 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.snx.lunchvotes.utils.LimitationChecker;
 import ru.snx.lunchvotes.utils.exceptions.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-@RestControllerAdvice
+@RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class AllExceptionHandler {
 
@@ -33,7 +35,7 @@ public class AllExceptionHandler {
     }
 
     @ExceptionHandler({NotOwnerException.class, NotTodayException.class, OutOfTimeException.class})
-    public ResponseEntity<ErrorInfo> handleOwnerAndDateTimeError(HttpServletRequest req, NotFoundException e) {
+    public ResponseEntity<ErrorInfo> handleOwnerAndDateTimeError(HttpServletRequest req, Exception e) {
         return getErrorInfo(HttpStatus.BAD_REQUEST, req.getRequestURL(), e.getMessage());
     }
 
@@ -45,7 +47,6 @@ public class AllExceptionHandler {
         return getErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY, req.getRequestURL(), errors);
     }
 
-    //DB constraints handler
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorInfo> conflict(HttpServletRequest req, DataIntegrityViolationException e) {
         String rootMsg = LimitationChecker.getRootCause(e).getMessage();

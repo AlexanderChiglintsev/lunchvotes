@@ -29,6 +29,11 @@ public class Restaurant {
         this.name = name;
     }
 
+    public Restaurant(Restaurant restaurant) {
+        this.id = restaurant.id;
+        this.name = restaurant.name;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -10,12 +10,21 @@
 
     <context:component-scan base-package="ru.snx.lunchvotes"/>
 
-    <!--Cache enabling-->
-    <cache:annotation-driven cache-manager="ehCacheManager"/>
-    <bean id="ehCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
-        <property name="cacheManager">
-            <bean class="org.springframework.cache.jcache.JCacheManagerFactoryBean" p:cacheManagerUri="classpath:ehcache.xml"/>
-        </property>
-    </bean>
+
+    <beans profile="tomcat, tests">
+        <!--Cache enabling-->
+        <cache:annotation-driven cache-manager="ehCacheManager"/>
+        <bean id="ehCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
+            <property name="cacheManager">
+                <bean class="org.springframework.cache.jcache.JCacheManagerFactoryBean"
+                      p:cacheManagerUri="classpath:ehcache.xml"/>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="resttest">
+        <!-- Disabling spring cache -->
+        <bean id="noOpCacheManager" class="org.springframework.cache.support.NoOpCacheManager"/>
+    </beans>
 
 </beans>
