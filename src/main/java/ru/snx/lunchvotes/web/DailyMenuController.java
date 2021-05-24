@@ -13,6 +13,7 @@ import ru.snx.lunchvotes.to.DailyMenuTo;
 import ru.snx.lunchvotes.utils.DateContainer;
 import ru.snx.lunchvotes.utils.ToConverter;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -52,8 +53,8 @@ public class DailyMenuController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<DailyMenu> addDish(@PathVariable Integer id, @RequestBody Dish dish) {
+    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<DailyMenu> addDish(@PathVariable Integer id, @Valid @RequestBody Dish dish) {
         DailyMenu dailyMenu = dailyMenuRepository.get(id);
         checkExistAndTodayDailyMenu(dailyMenu);
         dailyMenu.addDish(dish);

@@ -3,6 +3,7 @@ package ru.snx.lunchvotes.utils;
 import ru.snx.lunchvotes.model.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestData {
@@ -43,6 +44,7 @@ public class TestData {
     public static final Dish dish15 = new Dish(DISH_ID + 14, "Potato", 200);
     public static final Dish dish16 = new Dish(DISH_ID + 15, "White vine", 450);
     public static final Dish dish17 = new Dish(DISH_ID + 16, "Apple", 100);
+    public static final Dish newDish = new Dish(DISH_ID + 17, "Test", 777);
 
     //Daily menus
     public static final int DAILY_MENU_ID = DailyMenu.START_SEQ;
@@ -51,8 +53,9 @@ public class TestData {
     public static final DailyMenu dm3 = new DailyMenu(DAILY_MENU_ID + 2, restaurantThree, LocalDate.of(2021, 5, 1), dish6, dish7, dish8);
     public static final DailyMenu dm4 = new DailyMenu(DAILY_MENU_ID + 3, restaurantOne, LocalDate.of(2021, 5, 2), dish9, dish10);
     public static final DailyMenu dm5 = new DailyMenu(DAILY_MENU_ID + 4, restaurantTwo, LocalDate.of(2021, 5, 2), dish11, dish12, dish13);
-    public static final DailyMenu dm6 = new DailyMenu(DAILY_MENU_ID + 5, restaurantThree, LocalDate.of(2021, 5, 2), dish14, dish15, dish16, dish17);
+    public static final DailyMenu dm6 = new DailyMenu(DAILY_MENU_ID + 5, restaurantThree, LocalDate.of(2021, 5, 2), new ArrayList<>());
     public static final DailyMenu newDailyMenu = new DailyMenu(DAILY_MENU_ID + 6, restaurantThree, LocalDate.of(2021, 5, 3), dish17);
+    public static final DailyMenu todayDailyMenu = new DailyMenu(DAILY_MENU_ID + 6, restaurantTwo, LocalDate.now());
 
     //Votes
     public static final int VOTE_ID = Vote.START_SEQ;
@@ -65,8 +68,13 @@ public class TestData {
 
     static {
         dm1.setVotes(List.of(vote1, vote2));
-        dailyMenus = List.of(dm1, dm2, dm3);
+        dm5.setVotes(List.of(vote3));
+        dailyMenus = List.of(dm4, dm5, dm6);
         dish17.setDailyMenu(newDailyMenu);
         restaurants = List.of(restaurantOne, restaurantTwo, restaurantThree);
+        dm6.addDish(dish14);
+        dm6.addDish(dish15);
+        dm6.addDish(dish16);
+        dm6.addDish(dish17);
     }
 }

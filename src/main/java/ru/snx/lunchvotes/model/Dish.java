@@ -37,11 +37,10 @@ public class Dish {
     public Dish() {
     }
 
-    public Dish(Integer id, String description, int cost) {
+    public Dish(Integer id, String description, Integer cost) {
         this.id = id;
         this.description = description;
         this.cost = cost;
-        //this.dailyMenu = new DailyMenu();
     }
 
     public Integer getId() {
@@ -60,11 +59,11 @@ public class Dish {
         this.description = description;
     }
 
-    public int getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 

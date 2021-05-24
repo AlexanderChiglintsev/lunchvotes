@@ -29,7 +29,7 @@ class DataJpaDailyMenuRepositoryTest extends AbstractTest {
 
     @Test
     void getAll() {
-        List<DailyMenu> obtained = dailyMenuRepository.getAll(LocalDate.of(2021, 5, 1));
+        List<DailyMenu> obtained = dailyMenuRepository.getAll(LocalDate.of(2021, 5, 2));
         Assertions.assertThat(dailyMenus)
                 .usingRecursiveComparison()
                 .ignoringFields("votes", "dailyDishes.dailyMenu")
@@ -47,7 +47,7 @@ class DataJpaDailyMenuRepositoryTest extends AbstractTest {
 
     @Test
     void getAllWithVotes() {
-        List<DailyMenu> obtained = dailyMenuRepository.getAllWithVotes(LocalDate.of(2021, 5, 1));
+        List<DailyMenu> obtained = dailyMenuRepository.getAllWithVotes(LocalDate.of(2021, 5, 2));
         Assertions.assertThat(dailyMenus)
                 .usingRecursiveComparison()
                 .ignoringFields("dailyDishes.dailyMenu", "votes.dailyMenu", "votes.user")

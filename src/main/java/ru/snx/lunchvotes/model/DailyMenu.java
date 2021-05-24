@@ -50,6 +50,14 @@ public class DailyMenu {
     public DailyMenu() {
     }
 
+    public DailyMenu(DailyMenu dm) {
+        this.id = dm.id;
+        this.date = dm.date;
+        this.restaurant = dm.restaurant;
+        this.dailyDishes = new ArrayList<>(dm.dailyDishes);
+        this.votes = dm.votes;
+    }
+
     public DailyMenu(Integer id, Restaurant restaurant, LocalDate date, List<Dish> dailyDishes) {
         this(id, restaurant, date, dailyDishes, Collections.emptyList());
     }
