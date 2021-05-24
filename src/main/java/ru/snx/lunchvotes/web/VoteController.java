@@ -1,5 +1,7 @@
 package ru.snx.lunchvotes.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ import static ru.snx.lunchvotes.utils.ToConverter.getVoteResultTo;
 @RestController
 @RequestMapping(value = "/votes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
+
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
+
     private final VoteRepository voteRepository;
     private final DailyMenuRepository dailyMenuRepository;
 
@@ -32,6 +37,7 @@ public class VoteController {
     @GetMapping("/{id}")
     public Vote get(@PathVariable Integer id) {
         Vote v = voteRepository.getWithUser(id);
+        LOG.debug("Get vote with id = {}", id);
         checkVoteOwner(v, SecurityUtil.authUserEmail());
         return voteRepository.get(id);
     }
@@ -41,13 +47,15 @@ public class VoteController {
         isValidTime();
         DailyMenu dailyMenu = dailyMenuRepository.get(dmId);
         checkExistAndTodayDailyMenu(dailyMenu);
-        Vote v = voteRepository.getByDate(DateContainer.getDate(), SecurityUtil.authUserEmail());
-        if (v == null) {
-            v = new Vote(null, dailyMenu, DateContainer.getDate(), null);
+        Vote vote = voteRepository.getByDate(DateContainer.getDate(), SecurityUtil.authUserEmail());
+        if (vote == null) {
+            LOG.debug("Save new vote");
+            vote = new Vote(null, dailyMenu, DateContainer.getDate(), null);
         } else {
-            v.setDailyMenu(dailyMenu);
+            LOG.debug("Update vote with id = {}", vote.getId());
+            vote.setDailyMenu(dailyMenu);
         }
-        Vote saved = voteRepository.save(v, SecurityUtil.authUserEmail());
+        Vote saved = voteRepository.save(vote, SecurityUtil.authUserEmail());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/votes/{id}")
@@ -56,7 +64,8 @@ public class VoteController {
     }
 
     @GetMapping("/today")
-    public List<VoteResultTo> getTodayVotes() {
+    public List<VoteResultTo> getTodayVotesResult() {
+        LOG.debug("Get daily votes results");
         return getVoteResultTo(dailyMenuRepository.getAllWithVotes(DateContainer.getDate()));
     }
 }

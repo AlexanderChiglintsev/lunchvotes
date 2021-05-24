@@ -18,15 +18,15 @@ import java.util.Map;
 
 @RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class AllExceptionHandler {
+public class AllExceptionsHandler {
 
     private static final Map<String, String> CONSTRAINTS = Map.of(
-        "users_email_unique_idx", "User with such email already exist!",
-        "user_roles_unique_idx", "User can be with once role!",
-        "restaurant_name_unique_idx", "Restaurant with such name already exist!",
-        "restaurant_date_unique_idx", "Daily menu for this restaurant already exist, change it!",
-        "date_user_unique_idx", "Votes from user already saved today!",
-        "dish_daily_menu_unique_idx", "Such dish already exist in this daily menu!"
+            "users_email_unique_idx", "User with such email already exist!",
+            "user_roles_unique_idx", "User can be with once role!",
+            "restaurant_name_unique_idx", "Restaurant with such name already exist!",
+            "restaurant_date_unique_idx", "Daily menu for this restaurant already exist, change it!",
+            "date_user_unique_idx", "Votes from user already saved today!",
+            "dish_daily_menu_unique_idx", "Such dish already exist in this daily menu!"
     );
 
     @ExceptionHandler(NotFoundException.class)
@@ -58,7 +58,7 @@ public class AllExceptionHandler {
                 }
             }
         }
-        return getErrorInfo(HttpStatus.CONFLICT, req.getRequestURL(),"Incorrect data, can't save!");
+        return getErrorInfo(HttpStatus.CONFLICT, req.getRequestURL(), "Incorrect data, can't save!");
     }
 
     @ExceptionHandler(Exception.class)
