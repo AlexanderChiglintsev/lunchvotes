@@ -14,6 +14,7 @@ import ru.snx.lunchvotes.utils.SecurityUtil;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 import static ru.snx.lunchvotes.utils.LimitationChecker.checkExistUser;
 import static ru.snx.lunchvotes.utils.LimitationChecker.checkOwner;
@@ -47,6 +48,7 @@ public class UserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> register(@Valid @RequestBody User user) {
         LOG.debug("Register new user");
+        user.setRoles(Set.of(Role.USER));
         User created = userRepository.save(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/users/{id}").build().toUri();

@@ -29,3 +29,16 @@
 
 #### Get count votes for restaurants today
 `curl -s http://localhost:8080/lunchvotes/votes/today --user admin@admin.com:admin`
+
+#### Get all users
+`curl -s http://localhost:8080/lunchvotes/users --user admin@admin.com:admin`
+
+#### Get user with an id = 100
+`curl -s http://localhost:8080/lunchvotes/users/100 --user admin@admin.com:admin`
+
+#### Register new user (default role = user)
+`curl -s -X "POST" http://localhost:8080/lunchvotes/users -H "Content-Type: application/json" -d "{\"id\":\"\",\"name\":\"test_name\",\"email\":\"test@test.tt\",\"passwor
+d\":\"password\"}"`
+
+#### Grants admin rules to user with id = 102
+`curl -s -X "PATCH" http://localhost:8080/lunchvotes/users/102 -H "Content-Type: application/json" --user admin@admin.com:admin`

@@ -8,8 +8,8 @@
 
     <context-param>
         <param-name>spring.profiles.default</param-name>
-        <!--tests for local, tomcat for maven deploy-->
-        <param-value>tests</param-value>
+        <!--tests for local, tomcat for maven-cargo-plugin deploy-->
+        <param-value>tomcat</param-value>
     </context-param>
 
     <context-param>
