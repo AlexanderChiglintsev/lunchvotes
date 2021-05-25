@@ -28,8 +28,7 @@ class RestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     void getForbidden() throws Exception {
-        perform(MockMvcRequestBuilders.get(URL + "/" + R1_ID)
-                .with(userHttpBasic(user)))
+        perform(MockMvcRequestBuilders.get(URL + "/" + R1_ID))
                 .andExpect(status().isForbidden());
     }
 

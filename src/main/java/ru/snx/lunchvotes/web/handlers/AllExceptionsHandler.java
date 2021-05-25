@@ -1,4 +1,4 @@
-package ru.snx.lunchvotes.web;
+package ru.snx.lunchvotes.web.handlers;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;

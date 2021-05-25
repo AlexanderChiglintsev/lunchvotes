@@ -9,11 +9,11 @@ public final class DateContainer {
 
     private static LocalTime globalTime = LocalTime.MIN;
 
-    public static LocalDate getDate(){
+    public static LocalDate getDate() {
         return globalDate.isEqual(LocalDate.MIN) ? LocalDate.now() : globalDate;
     }
 
-    public static LocalTime getTime(){
+    public static LocalTime getTime() {
         return globalTime.equals(LocalTime.MIN) ? LocalTime.now() : globalTime;
     }
 

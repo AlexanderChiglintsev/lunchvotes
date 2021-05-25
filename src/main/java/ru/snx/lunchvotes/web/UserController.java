@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> register(@Valid @RequestBody User user){
+    public ResponseEntity<User> register(@Valid @RequestBody User user) {
         LOG.debug("Register new user");
         User created = userRepository.save(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> setAdminRules(@PathVariable Integer id){
+    public ResponseEntity<User> setAdminRules(@PathVariable Integer id) {
         User updated = userRepository.get(id);
         checkExistUser(updated);
         updated.getRoles().add(Role.ADMIN);

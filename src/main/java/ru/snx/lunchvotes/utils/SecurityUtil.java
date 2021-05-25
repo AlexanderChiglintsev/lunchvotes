@@ -28,8 +28,8 @@ public class SecurityUtil {
         );
         user.setRoles(
                 regUser.getAuthorities().stream()
-                .map(auth -> Role.valueOf(auth.getAuthority()))
-                .collect(Collectors.toSet())
+                        .map(auth -> Role.valueOf(auth.getAuthority()))
+                        .collect(Collectors.toSet())
         );
         return user;
     }

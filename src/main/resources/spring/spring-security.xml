@@ -6,7 +6,8 @@
 
     <http pattern="/webjars/**" security="none"/>
 
-    <http use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+    <http use-expressions="true" name="restSecurityFilterChain" create-session="stateless"
+          entry-point-ref="customAuthenticationEntryPoint">
         <http-basic/>
         <intercept-url pattern="/restaurants/**" access="hasAuthority('ADMIN')"/>
         <intercept-url pattern="/votes/**" access="isAuthenticated()"/>
@@ -22,6 +23,9 @@
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
         <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
         <intercept-url pattern="/v2/api-docs/**" access="permitAll()"/>
+
+        <access-denied-handler ref="customAccessDeniedHandler"/>
+
         <csrf disabled="true"/>
     </http>
 

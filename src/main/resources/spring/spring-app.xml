@@ -10,6 +10,7 @@
 
     <context:component-scan base-package="ru.snx.lunchvotes"/>
 
+    <bean class="ru.snx.lunchvotes.utils.CustomObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
     <beans profile="tomcat, tests">
         <!--Cache enabling-->
