@@ -4,7 +4,8 @@ import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.snx.lunchvotes.model.DailyMenu;
 import ru.snx.lunchvotes.model.Restaurant;
-import ru.snx.lunchvotes.model.Vote;
+import ru.snx.lunchvotes.model.Role;
+import ru.snx.lunchvotes.model.User;
 import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
 import ru.snx.lunchvotes.utils.exceptions.NotOwnerException;
 import ru.snx.lunchvotes.utils.exceptions.NotTodayException;
@@ -36,8 +37,16 @@ public class LimitationChecker {
         );
     }
 
-    public static void checkVoteOwner(Vote v, String email) {
-        if (!Objects.equals(v.getUser().getEmail(), email)) throw new NotOwnerException("Can't get, not owner!");
+    public static void checkExistUser(User user) {
+        if (notExist(user)) throw new NotFoundException(
+                "User not found!"
+        );
+    }
+
+    public static void checkOwner(User u, User authUser) {
+        if (!Objects.equals(u.getEmail(), authUser.getEmail()) && !authUser.getRoles().contains(Role.ADMIN)) {
+            throw new NotOwnerException("Can't get, not owner!");
+        }
     }
 
     //  https://stackoverflow.com/a/65442410/548473

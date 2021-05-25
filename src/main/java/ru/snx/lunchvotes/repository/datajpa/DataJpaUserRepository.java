@@ -7,6 +7,8 @@ import ru.snx.lunchvotes.repository.UserRepository;
 import ru.snx.lunchvotes.repository.adapters.AdapterUserRepository;
 import ru.snx.lunchvotes.utils.exceptions.NotFoundException;
 
+import java.util.List;
+
 @Repository
 @Transactional(readOnly = true)
 public class DataJpaUserRepository implements UserRepository {
@@ -26,6 +28,11 @@ public class DataJpaUserRepository implements UserRepository {
     @Override
     public User get(Integer id) {
         return adapterUserRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return (List<User>) adapterUserRepository.findAll();
     }
 
     @Override

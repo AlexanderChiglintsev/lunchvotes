@@ -38,7 +38,7 @@ public class VoteController {
     public Vote get(@PathVariable Integer id) {
         Vote v = voteRepository.getWithUser(id);
         LOG.debug("Get vote with id = {}", id);
-        checkVoteOwner(v, SecurityUtil.authUserEmail());
+        checkOwner(v.getUser(), SecurityUtil.getAuthUser());
         return voteRepository.get(id);
     }
 
@@ -47,7 +47,7 @@ public class VoteController {
         isValidTime();
         DailyMenu dailyMenu = dailyMenuRepository.get(dmId);
         checkExistAndTodayDailyMenu(dailyMenu);
-        Vote vote = voteRepository.getByDate(DateContainer.getDate(), SecurityUtil.authUserEmail());
+        Vote vote = voteRepository.getByDate(DateContainer.getDate(), SecurityUtil.getAuthUser().getEmail());
         if (vote == null) {
             LOG.debug("Save new vote");
             vote = new Vote(null, dailyMenu, DateContainer.getDate(), null);
@@ -55,7 +55,7 @@ public class VoteController {
             LOG.debug("Update vote with id = {}", vote.getId());
             vote.setDailyMenu(dailyMenu);
         }
-        Vote saved = voteRepository.save(vote, SecurityUtil.authUserEmail());
+        Vote saved = voteRepository.save(vote, SecurityUtil.getAuthUser().getEmail());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/votes/{id}")

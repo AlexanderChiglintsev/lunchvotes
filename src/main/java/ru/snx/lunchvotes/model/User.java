@@ -1,5 +1,6 @@
 package ru.snx.lunchvotes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
@@ -45,6 +46,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("date DESC")
+    @JsonIgnore
     private List<Vote> votes;
 
     public User() {
@@ -52,6 +54,10 @@ public class User {
 
     public User(User user) {
         this(user.id, user.name, user.email, user.password, user.roles, user.votes);
+    }
+
+    public User(Integer id, String name, String email, String password) {
+        this(id, name, email, password, Role.USER);
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {

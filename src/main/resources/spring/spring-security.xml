@@ -14,6 +14,10 @@
         <intercept-url pattern="/dailyMenus/**" access="hasAuthority('ADMIN')" method="PATCH"/>
         <intercept-url pattern="/dailyMenus" access="isAuthenticated()" method="GET"/>
         <intercept-url pattern="/dailyMenus/**" access="hasAuthority('ADMIN')" method="POST"/>
+        <intercept-url pattern="/users" access="hasAuthority('ADMIN')" method="GET"/>
+        <intercept-url pattern="/users/**" access="isAuthenticated()" method="GET"/>
+        <intercept-url pattern="/users" access="permitAll()" method="POST"/>
+        <intercept-url pattern="/users/**" access="hasAuthority('ADMIN')" method="PATCH"/>
 
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
         <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
@@ -30,10 +34,6 @@
                                users-by-username-query="SELECT email, password, true FROM users WHERE email = ?"
                                authorities-by-username-query="SELECT u.email, r.role FROM users u, user_roles r WHERE u.id = r.user_id AND u.email = ?"
             />
-            <!--<user-service>
-                <user name="user@user.ru" password="user" authorities="ROLE_USER"/>
-                <user name="admin@admin.com" password="admin" authorities="ROLE_ADMIN"/>
-            </user-service>-->
         </authentication-provider>
     </authentication-manager>
 
