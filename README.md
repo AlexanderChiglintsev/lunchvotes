@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/AlexanderChiglintsev/lunchvotes.svg?branch=main)](travis-ci.com/AlexanderChiglintsev/lunchvotes)
+
 # Lunchvotes 
 Voting system for help choose restaurant for lunch.
 
