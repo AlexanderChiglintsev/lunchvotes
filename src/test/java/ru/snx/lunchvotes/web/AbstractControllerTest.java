@@ -30,6 +30,14 @@ public abstract class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
 
+    private MockMvc mockMvc;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     static {
         CHARACTER_ENCODING_FILTER.setEncoding("UTF-8");
         CHARACTER_ENCODING_FILTER.setForceEncoding(true);
@@ -38,14 +46,6 @@ public abstract class AbstractControllerTest {
     public static RequestPostProcessor userHttpBasic(User user) {
         return SecurityMockMvcRequestPostProcessors.httpBasic(user.getEmail(), user.getPassword());
     }
-
-    private MockMvc mockMvc;
-
-    @Autowired
-    protected ObjectMapper objectMapper;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
 
     @PostConstruct
     private void postConstruct() {
