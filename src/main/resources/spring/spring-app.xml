@@ -12,7 +12,7 @@
 
     <bean class="ru.snx.lunchvotes.utils.CustomObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
-    <beans profile="tomcat, tests">
+    <beans profile="tomcat">
         <!--Cache enabling-->
         <cache:annotation-driven cache-manager="ehCacheManager"/>
         <bean id="ehCacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
@@ -23,7 +23,7 @@
         </bean>
     </beans>
 
-    <beans profile="resttest">
+    <beans profile="tests">
         <!-- Disabling spring cache -->
         <bean id="noOpCacheManager" class="org.springframework.cache.support.NoOpCacheManager"/>
     </beans>

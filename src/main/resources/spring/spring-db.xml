@@ -9,7 +9,7 @@
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-    <beans profile="tests, resttest">
+    <beans profile="tests">
         <!--Configuring datasource (HSQLDB)-->
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource">
@@ -26,7 +26,7 @@
         <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
     </beans>
 
-    <beans profile="tomcat, tests, resttest">
+    <beans profile="tomcat, tests">
 
         <!--Init and populate DB on startup-->
         <jdbc:initialize-database enabled="${database.init}">
